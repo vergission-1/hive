@@ -1,0 +1,108 @@
+# 🧬 工作流：日语医学翻译
+# 从日语医学文章到结构化笔记
+
+workflow:
+  id: jp-med-translate-v1
+  name: 日语医学翻译工作流
+  version: 0.1
+  description: |
+    将日语医学文章翻译成中文/英语
+    并提取专业术语生成单词卡
+
+trigger:
+  type: manual | file_drop | api
+  input:
+    type: text | file
+    format: markdown | plain_text | pdf
+
+steps:
+  - id: step-1
+    name: 获取输入
+    cell: cell-input-001
+    app: text-loader
+    output: raw-text
+
+  - id: step-2
+    name: 日语分词
+    cell: cell-japanese-001
+    app: japanese-tokenizer
+    input: raw-text
+    params:
+      dictionary: medical
+      include_reading: true
+    output: tokens
+
+  - id: step-3
+    name: 术语识别
+    cell: cell-medical-001
+    app: term-identifier
+    input: tokens
+    params:
+      database: pathogen-biology
+      min_confidence: 0.7
+    output: annotated-text
+
+  - id: step-4
+    name: 翻译
+    cell: cell-translate-001
+    app: jp-zh-en-translator
+    input: annotated-text
+    params:
+      target_language: zh | en
+      preserve_terms: true
+    output: translation
+
+  - id: step-5
+    name: 生成单词卡
+    cell: cell-vocab-001
+    app: flashcard-generator
+    input: annotated-text
+    params:
+      format: anki | json
+      include_example: true
+    output: flashcards
+
+  - id: step-6
+    name: 存储
+    cell: cell-storage-001
+    app: note-packer
+    inputs:
+      - translation
+      - flashcards
+    params:
+      tags: [japanese, medical, pathogen-biology]
+      auto_link: true
+    output: stored-note
+
+visualization:
+  type: flow-chart
+  layout: horizontal
+  colors:
+    input: "#4CAF50"
+    process: "#2196F3"
+    output: "#FF9800"
+    storage: "#9C27B0"
+
+metrics:
+  - name: execution_time
+    unit: seconds
+  - name: terms_extracted
+    unit: count
+  - name: translation_quality
+    unit: score (0-1)
+
+error_handling:
+  on_failure:
+    - retry: 3
+    - fallback: log_and_continue
+    - notify: user
+
+---
+# 🧪 使用示例
+
+# CLI:
+# python hive.py run-workflow jp-med-translate --input article.txt
+
+# API:
+# POST /workflows/jp-med-translate/run
+# {"input": "文本内容", "params": {...}}

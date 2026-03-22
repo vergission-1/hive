@@ -1,0 +1,96 @@
+{
+  "id": "cell-japanese-001",
+  "name": "日语学习蜂房",
+  "version": "0.1",
+  "type": "language",
+  "description": "处理日语相关的知识：分词、语法分析、翻译",
+  
+  "environment": {
+    "language": "ja",
+    "input_methods": ["romaji", "kana", "kanji"],
+    "tools": ["tokenizer", "grammar_parser", "dictionary"]
+  },
+  
+  "data": {
+    "dictionaries": [
+      "jp-zh-medical",
+      "jp-en-general",
+      "grammar_patterns"
+    ],
+    "vocab_count": 0,
+    "grammar_patterns": []
+  },
+  
+  "applications": [
+    {
+      "id": "app-tokenizer",
+      "name": "日语分词器",
+      "type": "processor",
+      "input": "raw_text",
+      "output": "tokens",
+      "params": {
+        "dictionary": "medical",
+        "include_reading": true,
+        "include_pos": true
+      }
+    },
+    {
+      "id": "app-grammar",
+      "name": "语法分析器",
+      "type": "processor",
+      "input": "tokens",
+      "output": "parsed_sentence",
+      "params": {
+        "detail_level": "full"
+      }
+    },
+    {
+      "id": "app-translator",
+      "name": "日中翻译器",
+      "type": "translator",
+      "input": "parsed_sentence",
+      "output": "translated_text",
+      "params": {
+        "target_language": "zh",
+        "preserve_terms": true
+      }
+    }
+  ],
+  
+  "connections": [
+    {
+      "target": "cell-medical-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["term_lookup", "definition_request"]
+    },
+    {
+      "target": "cell-translate-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["translate_request"]
+    },
+    {
+      "target": "cell-vocab-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["vocab_export"]
+    }
+  ],
+  
+  "protocols": ["HTP-v1"],
+  
+  "metrics": {
+    "created_at": "2026-03-22T14:27:00+08:00",
+    "last_modified": "2026-03-22T14:27:00+08:00",
+    "total_requests": 0,
+    "avg_response_time_ms": 0
+  },
+  
+  "metadata": {
+    "author": "vergiss",
+    "tags": ["japanese", "language", "medical"],
+    "icon": "🇯🇵",
+    "color": "#FF6B6B"
+  }
+}

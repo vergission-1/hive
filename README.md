@@ -2,6 +2,8 @@
 
 **知识细胞系统 —— 一个有生命的知识操作系统**
 
+> "从化学反应的角度去构想一个细胞"
+
 ---
 
 ## 🌱 构想
@@ -30,41 +32,96 @@ Hive 不是一个笔记应用，不是一个知识库。
 
 ---
 
-## 📁 项目结构（计划）
+## 📁 项目结构
 
 ```
 hive/
-├── core/           # 核心蜂房（内核）
-│   ├── scheduler   # 调度蜂房
-│   ├── storage     # 存储蜂房
-│   └── network     # 网络蜂房
-├── cells/          # 应用蜂房
-│   ├── japanese    # 日语蜂房
-│   ├── medical     # 医学蜂房
-│   └── translate   # 翻译蜂房
-├── protocol/       # HTP 协议定义
-├── workflows/      # 工作流定义
-└── docs/           # 文档
+├── src/              # 源代码
+│   └── hive.py       # CLI 主程序
+├── cells/            # 蜂房定义
+│   ├── examples/     # 示例蜂房
+│   │   ├── japanese.json
+│   │   ├── medical.json
+│   │   └── music.json
+│   └── *.json        # 用户创建的蜂房
+├── protocol/         # 协议规范
+│   └── HTP-v1.md     # Hive 传输协议 v1
+├── workflows/        # 工作流定义
+│   └── jp-med-translate.yaml
+├── docs/             # 文档
+│   ├── vision.md          # 愿景文档
+│   ├── cell-analogy.md    # 细胞类比
+│   └── music-theory.md    # 音乐理论
+├── experiments/      # 实验记录
+│   └── reverse-engineering.md
+├── scripts/          # 辅助脚本
+│   └── demo.sh       # 演示脚本
+└── README.md         # 本文件
 ```
 
 ---
 
 ## 🚀 状态
 
-**阶段 0：种子（Seed）**
+**阶段 0：种子（Seed）** ✅
 
 - [x] 项目创建
-- [ ] 核心蜂房设计
-- [ ] 协议 v0.1
-- [ ] 第一个工作流
+- [x] CLI 基础功能
+- [x] 协议 v1 文档
+- [x] 示例蜂房
+- [x] 工作流定义
+- [x] 文档体系
+
+**阶段 1：发芽（Sprout）** 🌱
+
+- [ ] Web 界面原型
+- [ ] 工作流引擎实现
+- [ ] 蜂房应用沙箱
+- [ ] 本地部署脚本
+
+---
+
+## 🚀 快速开始
+
+```bash
+# 克隆仓库
+git clone https://github.com/vergission-1/hive.git
+cd hive
+
+# 运行演示
+bash scripts/demo.sh
+
+# 或者手动使用
+python3 src/hive.py help
+python3 src/hive.py create-cell my-cell
+python3 src/hive.py list-cells
+```
+
+---
+
+## 📚 文档
+
+| 文档 | 说明 |
+|------|------|
+| [愿景文档](docs/vision.md) | Hive 的长期愿景和哲学 |
+| [细胞类比](docs/cell-analogy.md) | 从生物学借鉴的设计原则 |
+| [协议规范](protocol/HTP-v1.md) | 蜂房间通信协议 |
+| [音乐理论](docs/music-theory.md) | 游戏音乐创作指南 |
+| [逆向工程](experiments/reverse-engineering.md) | 逆向工程学习记录 |
 
 ---
 
 ## 🧪 哲学
 
-> "从化学反应的角度去构想一个细胞"
+> "这不是图书馆，这是生命。"
 
-这不是图书馆，这是生命。
+Hive 的设计灵感来自细胞生物学：
+- 蜂房 = 细胞
+- 协议 = 信号分子
+- 工作流 = 代谢通路
+- 应用 = 细胞器
+
+知识在这里是活的，会生长、会进化、会与你共鸣。
 
 ---
 

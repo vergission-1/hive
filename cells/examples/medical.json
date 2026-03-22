@@ -1,0 +1,100 @@
+{
+  "id": "cell-medical-001",
+  "name": "病原生物学蜂房",
+  "version": "0.1",
+  "type": "knowledge",
+  "description": "病原生物学专业知识库：术语、概念、关联",
+  
+  "environment": {
+    "domain": "pathogen-biology",
+    "language": ["zh", "en", "ja"],
+    "tools": ["term_identifier", "concept_mapper", "quiz_generator"]
+  },
+  
+  "data": {
+    "topics": [
+      "bacteria",
+      "viruses",
+      "fungi",
+      "parasites",
+      "immunology",
+      "epidemiology"
+    ],
+    "term_count": 0,
+    "concept_graph": []
+  },
+  
+  "applications": [
+    {
+      "id": "app-term-lookup",
+      "name": "术语查询器",
+      "type": "lookup",
+      "input": "term_query",
+      "output": "term_definition",
+      "params": {
+        "include_etymology": true,
+        "include_related": true
+      }
+    },
+    {
+      "id": "app-quiz-gen",
+      "name": "单词卡生成器",
+      "type": "generator",
+      "input": "topic",
+      "output": "flashcards",
+      "params": {
+        "difficulty": "medium",
+        "count": 10,
+        "format": "anki"
+      }
+    },
+    {
+      "id": "app-concept-map",
+      "name": "概念图谱生成器",
+      "type": "visualizer",
+      "input": "topic",
+      "output": "concept_graph",
+      "params": {
+        "depth": 2,
+        "layout": "force-directed"
+      }
+    }
+  ],
+  
+  "connections": [
+    {
+      "target": "cell-japanese-001",
+      "protocol": "HTP-v1",
+      "direction": "bidirectional",
+      "actions": ["term_translation", "definition_request"]
+    },
+    {
+      "target": "cell-vocab-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["vocab_export"]
+    },
+    {
+      "target": "cell-music-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["mnemonic_song_request"]
+    }
+  ],
+  
+  "protocols": ["HTP-v1"],
+  
+  "metrics": {
+    "created_at": "2026-03-22T14:27:00+08:00",
+    "last_modified": "2026-03-22T14:27:00+08:00",
+    "total_requests": 0,
+    "avg_response_time_ms": 0
+  },
+  
+  "metadata": {
+    "author": "vergiss",
+    "tags": ["medical", "pathogen-biology", "knowledge"],
+    "icon": "🦠",
+    "color": "#4ECDC4"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "id": "cell-music-001",
+  "name": "游戏音乐创作蜂房",
+  "version": "0.1",
+  "type": "creative",
+  "description": "游戏音乐创作辅助：和弦进行、参考曲、情绪映射",
+  
+  "environment": {
+    "domain": "music-production",
+    "genre": ["game", "ambient", "electronic"],
+    "tools": ["chord_progression", "reference_analyzer", "mood_mapper"]
+  },
+  
+  "data": {
+    "chord_progressions": [
+      {
+        "name": "Canon 进行",
+        "chords": "I-V-vi-iii-IV-I-IV-V",
+        "emotion": "温暖、怀念",
+        "examples": ["卡农", "许多流行歌曲"]
+      },
+      {
+        "name": "流行进行",
+        "chords": "vi-IV-I-V",
+        "emotion": "希望、向上",
+        "examples": ["众多流行音乐"]
+      },
+      {
+        "name": "爵士进行",
+        "chords": "ii-V-I",
+        "emotion": "复杂、成熟",
+        "examples": ["爵士标准曲"]
+      },
+      {
+        "name": "史诗进行",
+        "chords": "i-VI-III-VII",
+        "emotion": "宏大、悲壮",
+        "examples": ["游戏 Boss 战", "电影配乐"]
+      }
+    ],
+    "reference_tracks": [],
+    "mood_tags": ["探索", "战斗", "对话", "悲伤", "胜利", "悬疑"]
+  },
+  
+  "applications": [
+    {
+      "id": "app-chord-rec",
+      "name": "和弦进行推荐器",
+      "type": "recommender",
+      "input": "scene_description",
+      "output": "chord_progressions",
+      "params": {
+        "count": 3,
+        "include_examples": true
+      }
+    },
+    {
+      "id": "app-reference-ana",
+      "name": "参考曲分析器",
+      "type": "analyzer",
+      "input": "audio_file | youtube_url",
+      "output": "analysis_report",
+      "params": {
+        "analyze": ["chords", "tempo", "structure", "instrumentation"]
+      }
+    },
+    {
+      "id": "app-mood-map",
+      "name": "情绪映射器",
+      "type": "mapper",
+      "input": "game_scene",
+      "output": "music_parameters",
+      "params": {
+        "output_format": "daw_template"
+      }
+    },
+    {
+      "id": "app-midi-export",
+      "name": "MIDI 导出器",
+      "type": "exporter",
+      "input": "chord_progression",
+      "output": "midi_file",
+      "params": {
+        "tempo": 120,
+        "key": "C",
+        "instrument": "piano"
+      }
+    }
+  ],
+  
+  "connections": [
+    {
+      "target": "cell-medical-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["mnemonic_song_request"],
+      "description": "为医学知识创作记忆歌曲"
+    },
+    {
+      "target": "cell-japanese-001",
+      "protocol": "HTP-v1",
+      "direction": "outbound",
+      "actions": ["lyrics_translation"],
+      "description": "日语歌词翻译"
+    }
+  ],
+  
+  "protocols": ["HTP-v1"],
+  
+  "metrics": {
+    "created_at": "2026-03-22T21:16:00+08:00",
+    "last_modified": "2026-03-22T21:16:00+08:00",
+    "total_requests": 0,
+    "avg_response_time_ms": 0
+  },
+  
+  "metadata": {
+    "author": "vergiss",
+    "tags": ["music", "game", "creative", "chord"],
+    "icon": "🎵",
+    "color": "#FF6B9D"
+  }
+}
