@@ -1,0 +1,9 @@
+{
+  "id": "japanese",
+  "name": "japanese",
+  "type": "generic",
+  "data": {},
+  "connections": [
+    "medical"
+  ]
+}
